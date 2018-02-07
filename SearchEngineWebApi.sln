@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolrSearchEngineService", "SolrService\SolrSearchEngineService.csproj", "{0A626EB3-8539-47A6-A661-ED54D7ADAFBB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchEngineDomain", "SearchEngineDomain\SearchEngineDomain.csproj", "{E9E9948C-0568-472A-AF9E-25430DF1107E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchEngineWebApi", "SearchEngineWebApi\SearchEngineWebApi.csproj", "{5BB58DF8-C8DA-4C78-9E57-8F08F634D2A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElasticSearchEngineService", "ElasticSearchEngineService\ElasticSearchEngineService.csproj", "{F4DEA733-A2EC-45D1-867C-2C76093743D4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0A626EB3-8539-47A6-A661-ED54D7ADAFBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A626EB3-8539-47A6-A661-ED54D7ADAFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A626EB3-8539-47A6-A661-ED54D7ADAFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A626EB3-8539-47A6-A661-ED54D7ADAFBB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9E9948C-0568-472A-AF9E-25430DF1107E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9E9948C-0568-472A-AF9E-25430DF1107E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9E9948C-0568-472A-AF9E-25430DF1107E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9E9948C-0568-472A-AF9E-25430DF1107E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BB58DF8-C8DA-4C78-9E57-8F08F634D2A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BB58DF8-C8DA-4C78-9E57-8F08F634D2A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BB58DF8-C8DA-4C78-9E57-8F08F634D2A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BB58DF8-C8DA-4C78-9E57-8F08F634D2A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4DEA733-A2EC-45D1-867C-2C76093743D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4DEA733-A2EC-45D1-867C-2C76093743D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4DEA733-A2EC-45D1-867C-2C76093743D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4DEA733-A2EC-45D1-867C-2C76093743D4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2459D6CE-B37E-48B8-A561-A75C91A5A5FC}
+	EndGlobalSection
+EndGlobal
