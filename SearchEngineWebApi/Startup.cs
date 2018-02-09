@@ -41,7 +41,7 @@ namespace SolrWebService
         {
 
             var solrConnectionString = "http://192.168.99.100:8983/solr/solrdocument";
-            SolrNet.Startup.Init<SolrDocument>(solrConnectionString);
+            SolrNet.Startup.Init<SolrFileInfo>(solrConnectionString);
 
             services.AddSingleton<ISearchEngineService, SolrServiceImpl>();
         }
