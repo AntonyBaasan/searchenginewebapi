@@ -1,11 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
@@ -14,9 +11,11 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\SearchEngineDataAccess\SearchEngineDataAccess.csproj" />
+    <ProjectReference Include="..\SolrService\SolrSearchEngineService.csproj">
+      <Project>{0A626EB3-8539-47A6-A661-ED54D7ADAFBB}</Project>
+      <Name>SolrSearchEngineService</Name>
+    </ProjectReference>
   </ItemGroup>
-
 </Project>

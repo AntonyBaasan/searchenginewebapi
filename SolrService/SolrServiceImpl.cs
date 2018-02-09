@@ -9,18 +9,29 @@ namespace SolrService
 {
     public class SolrServiceImpl : ISearchEngineService
     {
+        private ISolrOperations<SolrFileInfo> _solrOperations;
+        
         public SolrServiceImpl()
         {
-
+            _solrOperations = ServiceLocator.Current.GetInstance<ISolrOperations<SolrFileInfo>>();
         }
 
         public int Index()
         {
             var docs = GetMockData();
 
-            var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SolrFileInfo>>();
-            solr.AddRange(docs);
-            ResponseHeader response = solr.Commit();
+            _solrOperations.AddRange(docs);
+            ResponseHeader response = _solrOperations.Commit();
+            if (response.Status == 0)//OK
+                return docs.Count;
+
+            throw new System.Exception("Can't index");
+        }
+        
+        public int Index(List<SolrFileInfo> docs)
+        {
+            _solrOperations.AddRange(docs);
+            ResponseHeader response = _solrOperations.Commit();
             if (response.Status == 0)//OK
                 return docs.Count;
 
@@ -29,9 +40,8 @@ namespace SolrService
 
         public int ClearAll()
         {
-            var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SolrFileInfo>>();
-            ResponseHeader r = solr.Delete(SolrQuery.All);
-            ResponseHeader response = solr.Commit();
+            ResponseHeader r = _solrOperations.Delete(SolrQuery.All);
+            ResponseHeader response = _solrOperations.Commit();
 
             if (response.Status == 0)
                 return 1;
@@ -39,11 +49,16 @@ namespace SolrService
             throw new System.Exception("Can't remove");
         }
 
+        public List<object> GetAll()
+        {
+            var results = _solrOperations.Query(SolrQuery.All);
+            return new List<object>(results);
+        }
+        
         public List<object> Search(string q)
         {
-            var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SolrFileInfo>>();
-            var results = solr.Query(new SolrQueryByField("name", q) { Quoted = false } + new SolrQueryByField("desc", q) { Quoted = false });
-            return new List<object> { results };
+            var results = _solrOperations.Query(new SolrQuery(q));
+            return new List<object> (results);
         }
 
         private List<SolrFileInfo> GetMockData()

@@ -7,7 +7,7 @@ namespace SearchEngineDomain.Data
     {
         [SolrUniqueKey("id")]
         public int Id { get; set; }
-        [SolrField("parentid")]
+        [SolrField("parentid", Boost = 1000)]
         public ICollection<int> ParentId { get; set; }
         [SolrField("name")]
         public ICollection<string> Name { get; set; }
