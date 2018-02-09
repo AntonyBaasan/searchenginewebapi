@@ -1,5 +1,5 @@
 ﻿using SearchEngineDomain.Data;
-using SolrService;
+using SolrSearchEngineService;
 using Xunit;
 
 namespace SearchEngineTests
@@ -23,6 +23,14 @@ namespace SearchEngineTests
             
             var all = solr.GetAll();
             Assert.Equal(6, all.Count);
+        }
+        
+        [Fact]
+        public void QueryByString()
+        {
+            var res = solr.Search("what");
+            
+            Assert.Equal(1, res.Count);
         }
 
         [Fact]

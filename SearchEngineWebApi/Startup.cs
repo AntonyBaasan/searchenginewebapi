@@ -4,8 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SearchEngineDomain;
 using SearchEngineDomain.Data;
-using SolrService;
 using SolrNet;
+using SolrSearchEngineService;
 
 namespace SolrWebService
 {
