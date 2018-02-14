@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SearchEngineDomain;
-using SearchEngineDomain.Data;
-using SolrNet;
+using SearchEngineDomain.Models;
 using SolrSearchEngineService;
 
 namespace SolrWebService

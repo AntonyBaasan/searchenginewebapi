@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using SolrNet.Attributes;
 
-namespace SearchEngineDomain.Data
+namespace SearchEngineDomain.Models
 {
     public class SolrFileInfo
     {

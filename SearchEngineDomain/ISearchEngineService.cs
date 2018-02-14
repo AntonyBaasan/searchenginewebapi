@@ -7,6 +7,8 @@ namespace SearchEngineDomain
         int Index();
 
         List<object> Search(string q);
+        
+        List<object> GetAll();
 
         int ClearAll();
     }

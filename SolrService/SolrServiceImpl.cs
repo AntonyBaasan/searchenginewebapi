@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CommonServiceLocator;
 using SearchEngineDomain;
-using SearchEngineDomain.Data;
+using SearchEngineDomain.Models;
 using SolrNet;
 
 namespace SolrSearchEngineService

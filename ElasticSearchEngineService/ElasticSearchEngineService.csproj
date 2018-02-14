@@ -1,7 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
+  <ItemGroup>
+    <ProjectReference Include="..\SearchEngineDomain\SearchEngineDomain.csproj">
+      <Project>{E9E9948C-0568-472A-AF9E-25430DF1107E}</Project>
+      <Name>SearchEngineDomain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="NEST" Version="6.0.1" />
+    <PackageReference Include="NEST.JsonNetSerializer" Version="6.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Private.CoreLib" />
+  </ItemGroup>
 </Project>

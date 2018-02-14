@@ -12,6 +12,10 @@
     <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ElasticSearchEngineService\ElasticSearchEngineService.csproj">
+      <Project>{F4DEA733-A2EC-45D1-867C-2C76093743D4}</Project>
+      <Name>ElasticSearchEngineService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SearchEngineDataAccess\SearchEngineDataAccess.csproj" />
     <ProjectReference Include="..\SolrService\SolrSearchEngineService.csproj">
       <Project>{0A626EB3-8539-47A6-A661-ED54D7ADAFBB}</Project>

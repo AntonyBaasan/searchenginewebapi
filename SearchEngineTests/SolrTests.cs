@@ -1,4 +1,4 @@
-﻿using SearchEngineDomain.Data;
+﻿using SearchEngineDomain.Models;
 using SolrSearchEngineService;
 using Xunit;
 
