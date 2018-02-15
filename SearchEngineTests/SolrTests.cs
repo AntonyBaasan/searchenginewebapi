@@ -1,49 +1,49 @@
-﻿using SearchEngineDomain.Models;
-using SolrSearchEngineService;
-using Xunit;
+﻿//using SearchEngineDomain.Interfaces.Models;
+//using SolrSearchEngineService;
+//using Xunit;
 
-namespace SearchEngineTests
-{
-    public class SolrTests
-    {
-        private SolrServiceImpl solr;
+//namespace SearchEngineTests
+//{
+//    public class SolrTests
+//    {
+//        private SolrServiceImpl solr;
 
-        public SolrTests()
-        {
-            solr = new SolrServiceImpl(SettingsUtils.GetConnectionString("SolrSearchEngine"));
-        }
+//        public SolrTests()
+//        {
+//            solr = new SolrServiceImpl(SettingsUtils.GetConnectionString("SolrSearchEngine"));
+//        }
 
-        [Fact]
-        public void IndexMockTest()
-        {
-            solr.Index();
+//        [Fact]
+//        public void IndexMockTest()
+//        {
+//            solr.Index();
             
-            var all = solr.GetAll();
-            Assert.Equal(6, all.Count);
-        }
+//            var all = solr.GetAll();
+//            Assert.Equal(6, all.Count);
+//        }
         
-        [Fact]
-        public void QueryByString()
-        {
-            var res = solr.Search("what");
+//        [Fact]
+//        public void QueryByString()
+//        {
+//            var res = solr.Search("what");
             
-            Assert.Single(res);
-        }
+//            Assert.Single(res);
+//        }
 
-        [Fact]
-        public void GetAllTest()
-        {
-            var all = solr.GetAll();
-            System.Console.WriteLine(all.Count);
-        }
+//        [Fact]
+//        public void GetAllTest()
+//        {
+//            var all = solr.GetAll();
+//            System.Console.WriteLine(all.Count);
+//        }
 
-        [Fact]
-        public void DeleteAllTest()
-        {
-            solr.ClearAll();
+//        [Fact]
+//        public void DeleteAllTest()
+//        {
+//            solr.DeleteAll();
             
-            var all = solr.GetAll();
-            Assert.Empty(all);
-        }
-    }
-}
+//            var all = solr.GetAll();
+//            Assert.Empty(all);
+//        }
+//    }
+//}

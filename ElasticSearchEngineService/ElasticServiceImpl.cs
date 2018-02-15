@@ -1,68 +1,86 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
+using System.Collections.Generic;
 using ElasticSearchEngineService.Models;
 using Nest;
-using SearchEngineDomain;
+using SearchEngineDomain.Interfaces;
 
 namespace ElasticSearchEngineService
 {
-    public class ElasticServiceImpl: ISearchEngineService
+    public class ElasticServiceImpl<T> : ISearchEngineService<T> where T : ElasticFileInfo
     {
         private ElasticClient client;
+        private static string _indexName = "fileinfoindex";
 
         public ElasticServiceImpl(string connectionString)
         {
+            SetupClient(connectionString);
+        }
+
+        public ElasticServiceImpl(string connectionString, string indexName)
+        {
+            SetupClient(connectionString);
+            _indexName = indexName;
+        }
+
+        private void SetupClient(string connectionString)
+        {
             var node = new Uri(connectionString);
             var settings = new ConnectionSettings(node);
-            client = new ElasticClient(settings); 
+            client = new ElasticClient(settings);
         }
-        
-        public int Index()
+
+        public long Index(List<T> docs)
         {
-            var file = new ElasticFileInfo
+            var files = docs.ConvertAll(d => d);
+
+            var descriptor = new BulkDescriptor();
+            files.ForEach(d =>
             {
-                Id = 1,
-                Name = "kimchy",
-                CreatedOn = (new DateTime(2009, 11, 15)).ToString(CultureInfo.InvariantCulture),
-                CreatedBy = "Trying out NEST, so far so good?"
-            };
-            
-            var response = client.Index(file, idx => idx.Index("fileinfoindex"));
-            
-            return 1;
+                descriptor.Index<T>(op => op.Index(_indexName).Document(d));
+            });
+
+            var result = client.Bulk(descriptor);
+
+            // return successful indexed document amount
+            return result.Items.Where(i=>i.Error==null).Count();
         }
 
-        public List<object> Search(string q)
+        public List<T> Search(string queryString)
         {
-            throw new System.NotImplementedException();
+            var response = client.Search<T>(s => s
+                    .Index(_indexName)
+                    .Query(qry => qry.QueryString(q => q.Query(queryString))));
+
+            return new List<T>(response.Documents);
         }
 
-        public List<object> GetAll()
+        public List<T> GetAll()
         {
-            var r = client.Get<ElasticFileInfo>(1, idx=>idx.Index("fileinfoindex"));
-            var l = new List<object>();
-            l.Add(r.Source);
+            var r = client.Search<T>(s => s
+                    .Index(_indexName)
+                    .From(0)
+                    .Size(10000)
+                    .Query(q => q.MatchAll()));
+
+            var l = new List<T>(r.Documents);
 
             return l;
-            
-//            List<object> indexedList = new List<object>();
-//            var scanResults = client.Search<ElasticFileInfo>(s => s
-//                .From(0)
-//                .Size(2000)
-//                .MatchAll()
-//                .Scroll("5m")
-//            );
-//
-//            var results = client.Scroll<ElasticFileInfo>("10m", scanResults.ScrollId);
-//
-//            return indexedList;
         }
 
-        public int ClearAll()
+        // NOTE: has to be long!!!
+        public long DeleteAll()
         {
-            throw new System.NotImplementedException();
+            var response = client.DeleteByQuery<T>(d => d
+                .Index(_indexName)
+                .Query(q => q.MatchAll()));
+
+            return response.Total;
+        }
+
+        public long DeleteByIds(List<long> ids)
+        {
+            throw new NotImplementedException();
         }
     }
 }

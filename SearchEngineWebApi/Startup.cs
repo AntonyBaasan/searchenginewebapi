@@ -1,10 +1,10 @@
 ﻿using ElasticSearchEngineService;
+using ElasticSearchEngineService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SearchEngineDomain;
-using SolrSearchEngineService;
+using SearchEngineDomain.Interfaces;
 
 namespace SolrWebService
 {
@@ -40,13 +40,13 @@ namespace SolrWebService
         private void ElasticSetup(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("ElasticSearchEngine");
-            services.AddSingleton<ISearchEngineService, ElasticServiceImpl>(s=>new ElasticServiceImpl(connectionString));
+            services.AddSingleton<ISearchEngineService<ElasticFileInfo>>(s=>new ElasticServiceImpl<ElasticFileInfo>(connectionString));
         }
         
         private void SetupSolr(IServiceCollection services)
         {
-            var connectionString = Configuration.GetConnectionString("SolrSearchEngine");
-            services.AddSingleton<ISearchEngineService, SolrServiceImpl>(s=>new SolrServiceImpl(connectionString));
+            //var connectionString = Configuration.GetConnectionString("SolrSearchEngine");
+            //services.AddSingleton<ISearchEngineService>(s=>new SolrServiceImpl(connectionString));
         }
     }
 }

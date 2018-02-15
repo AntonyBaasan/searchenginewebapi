@@ -1,48 +1,73 @@
-﻿using ElasticSearchEngineService;
+﻿using System.Collections.Generic;
+using ElasticSearchEngineService;
+using ElasticSearchEngineService.Models;
 using Xunit;
 
 namespace SearchEngineTests
 {
     public class ElasticTests
     {
-        private ElasticServiceImpl service;
+        private ElasticServiceImpl<ElasticFileInfo> service;
 
         public ElasticTests()
         {
-            service = new ElasticServiceImpl(SettingsUtils.GetConnectionString("ElasticSearchEngine"));
+            service = new ElasticServiceImpl<ElasticFileInfo>(SettingsUtils.GetConnectionString("ElasticSearchEngine"));
         }
 
         [Fact]
-        public void IndexMockTest()
+        public void IndexTest()
         {
-            service.Index();
-            
-            var all = service.GetAll();
-            Assert.Single(all);
+            var indexedAmount = service.Index(GetMockData());
+
+            Assert.Equal(2, indexedAmount);
         }
-        
+
         [Fact]
-        public void QueryByString()
+        public void QueryByStringTest1()
         {
+            service.Index(GetMockData());
+
             var res = service.Search("what");
-            
+
             Assert.Single(res);
         }
 
         [Fact]
+        public void QueryByStringTest2()
+        {
+            service.Index(GetMockData());
+
+            var res = service.Search("hello");
+
+            Assert.Single(res);
+        }
+
+
+        [Fact]
         public void GetAllTest()
         {
+            service.Index(GetMockData());
+
             var all = service.GetAll();
-            System.Console.WriteLine(all.Count);
+            Assert.Equal(2, all.Count);
         }
 
         [Fact]
         public void DeleteAllTest()
         {
-            service.ClearAll();
-            
-            var all = service.GetAll();
-            Assert.Empty(all);
+            service.Index(GetMockData());
+
+            long deletedAmount = service.DeleteAll();
+
+            Assert.Equal(2, deletedAmount);
+        }
+
+
+        private List<ElasticFileInfo> GetMockData()
+        {
+            var f1 = new ElasticFileInfo { Id = 0, Name = "TestFile1", Description = "What are you looking!", CreatedBy = "Rodney Jones" };
+            var f2 = new ElasticFileInfo { Id = 1, Name = "TestFile2", Description = "Hello world my friends", CreatedBy = "Antony Baasandorj" };
+            return new List<ElasticFileInfo> { f1, f2 };
         }
 
     }
