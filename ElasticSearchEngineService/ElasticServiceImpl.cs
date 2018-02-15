@@ -50,6 +50,8 @@ namespace ElasticSearchEngineService
         {
             var response = client.Search<T>(s => s
                     .Index(_indexName)
+                    .From(0)
+                    .Size(10000)
                     .Query(qry => qry.QueryString(q => q.Query(queryString))));
 
             return new List<T>(response.Documents);
