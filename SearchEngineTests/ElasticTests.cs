@@ -1,6 +1,4 @@
 ﻿using ElasticSearchEngineService;
-using SearchEngineDomain.Models;
-using SolrSearchEngineService;
 using Xunit;
 
 namespace SearchEngineTests
@@ -11,8 +9,7 @@ namespace SearchEngineTests
 
         public ElasticTests()
         {
-            const string connectionString = "http://192.168.99.100:9200";
-            service = new ElasticServiceImpl(connectionString);
+            service = new ElasticServiceImpl(SettingsUtils.GetConnectionString("ElasticSearchEngine"));
         }
 
         [Fact]
@@ -21,7 +18,7 @@ namespace SearchEngineTests
             service.Index();
             
             var all = service.GetAll();
-            Assert.Equal(1, all.Count);
+            Assert.Single(all);
         }
         
         [Fact]
@@ -29,7 +26,7 @@ namespace SearchEngineTests
         {
             var res = service.Search("what");
             
-            Assert.Equal(1, res.Count);
+            Assert.Single(res);
         }
 
         [Fact]
@@ -45,7 +42,7 @@ namespace SearchEngineTests
             service.ClearAll();
             
             var all = service.GetAll();
-            Assert.Equal(0, all.Count);
+            Assert.Empty(all);
         }
 
     }

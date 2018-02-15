@@ -10,8 +10,9 @@ namespace SolrSearchEngineService
     {
         private ISolrOperations<SolrFileInfo> _solrOperations;
 
-        public SolrServiceImpl()
+        public SolrServiceImpl(string connectionString)
         {
+            Startup.Init<SolrFileInfo>(connectionString);
             _solrOperations = ServiceLocator.Current.GetInstance<ISolrOperations<SolrFileInfo>>();
         }
 

@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ElasticSearchEngineService\ElasticSearchEngineService.csproj" />
     <ProjectReference Include="..\SolrService\SolrSearchEngineService.csproj" />
   </ItemGroup>
 

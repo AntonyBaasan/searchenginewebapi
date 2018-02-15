@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using ElasticSearchEngineService;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SearchEngineDomain;
-using SearchEngineDomain.Models;
 using SolrSearchEngineService;
 
 namespace SolrWebService
@@ -20,7 +20,8 @@ namespace SolrWebService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            SetupSolr(services);
+            ElasticSetup(services);
+            //SetupSolr(services);
 
             services.AddMvc();
         }
@@ -36,13 +37,16 @@ namespace SolrWebService
             app.UseMvc();
         }
 
+        private void ElasticSetup(IServiceCollection services)
+        {
+            var connectionString = Configuration.GetConnectionString("ElasticSearchEngine");
+            services.AddSingleton<ISearchEngineService, ElasticServiceImpl>(s=>new ElasticServiceImpl(connectionString));
+        }
+        
         private void SetupSolr(IServiceCollection services)
         {
-
-            var solrConnectionString = "http://192.168.99.100:8983/solr/solrdocument";
-            SolrNet.Startup.Init<SolrFileInfo>(solrConnectionString);
-
-            services.AddSingleton<ISearchEngineService, SolrServiceImpl>();
+            var connectionString = Configuration.GetConnectionString("SolrSearchEngine");
+            services.AddSingleton<ISearchEngineService, SolrServiceImpl>(s=>new SolrServiceImpl(connectionString));
         }
     }
 }

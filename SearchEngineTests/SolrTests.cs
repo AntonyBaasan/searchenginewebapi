@@ -10,10 +10,7 @@ namespace SearchEngineTests
 
         public SolrTests()
         {
-            var solrConnectionString = "http://192.168.99.100:8983/solr/collection2";
-            SolrNet.Startup.Init<SolrFileInfo>(solrConnectionString);
-
-            solr = new SolrServiceImpl();
+            solr = new SolrServiceImpl(SettingsUtils.GetConnectionString("SolrSearchEngine"));
         }
 
         [Fact]
@@ -30,7 +27,7 @@ namespace SearchEngineTests
         {
             var res = solr.Search("what");
             
-            Assert.Equal(1, res.Count);
+            Assert.Single(res);
         }
 
         [Fact]
@@ -46,7 +43,7 @@ namespace SearchEngineTests
             solr.ClearAll();
             
             var all = solr.GetAll();
-            Assert.Equal(0, all.Count);
+            Assert.Empty(all);
         }
     }
 }

@@ -10,8 +10,7 @@ namespace SearchEngineTests
         public DataBaseTests()
         {
             var options = new DbContextOptionsBuilder<ProphixDBContext>()
-                //.UseSqlServer("Data Source=DEVLATE557026\\DEVSRVR;Initial Catalog=PROPHIX_MetadataDb;Integrated Security=True")
-                .UseSqlServer("Data Source=192.168.99.100;Initial Catalog=TestDB;Persist Security Info=True;User ID=sa;Password=SuperString321")
+                .UseSqlServer(SettingsUtils.GetConnectionString("ProphixMetaDatabase"))
                 .Options;
             dbContext = new ProphixDBContext(options);
         }

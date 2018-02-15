@@ -4,6 +4,8 @@ namespace SearchEngineDomain
 {
     public interface ISearchEngineService
     {
+        //void Setup(string connectionString);
+
         int Index();
 
         List<object> Search(string q);
