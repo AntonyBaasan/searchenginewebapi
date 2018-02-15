@@ -22,7 +22,7 @@ namespace SolrWebService.Controllers
 
         [HttpGet]
         [Route("index")]
-        public string Index(string q)
+        public string Index()
         {
             var files = _context.FileInfos;
             var fileList = files.ToList();
@@ -46,6 +46,22 @@ namespace SolrWebService.Controllers
         public List<ElasticFileInfo> Search(string q)
         {
             return _searchEngineService.Search(q);
+        }
+
+        [HttpGet]
+        [Route("deleteindex")]
+        public string DeleteIndex()
+        {
+            _searchEngineService.DeleteIndex();
+            return "done";
+        }
+
+        [HttpGet]
+        [Route("createindex")]
+        public string CreateIndex()
+        {
+            _searchEngineService.CreateIndex();
+            return "done";
         }
     }
 }

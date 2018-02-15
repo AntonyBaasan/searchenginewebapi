@@ -19,8 +19,8 @@ namespace ElasticSearchEngineService
 
         public ElasticServiceImpl(string connectionString, string indexName)
         {
-            SetupClient(connectionString);
             _indexName = indexName;
+            SetupClient(connectionString);
         }
 
         private void SetupClient(string connectionString)
@@ -29,7 +29,7 @@ namespace ElasticSearchEngineService
             var settings = new ConnectionSettings(node);
             client = new ElasticClient(settings);
         }
-
+        
         public long Index(List<T> docs)
         {
             var files = docs.ConvertAll(d => d);
@@ -83,6 +83,20 @@ namespace ElasticSearchEngineService
         public long DeleteByIds(List<long> ids)
         {
             throw new NotImplementedException();
+        }
+
+        public void DeleteIndex()
+        {
+            client.DeleteIndex(_indexName);
+        }
+
+        public void CreateIndex()
+        {
+            var createIndexResponse = client.CreateIndex(_indexName, c => c
+                .Mappings(ms => ms
+                    .Map<ElasticFileInfo>(m => m.AutoMap())
+                )
+            );
         }
     }
 }

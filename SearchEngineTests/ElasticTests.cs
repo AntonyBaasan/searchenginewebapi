@@ -62,6 +62,32 @@ namespace SearchEngineTests
             Assert.Equal(2, deletedAmount);
         }
 
+        [Fact]
+        public void DeleteIndexTest()
+        {
+            service.Index(GetMockData());
+
+            service.DeleteIndex();
+
+            var all = service.GetAll();
+
+            Assert.Empty(all);
+        }
+
+        [Fact]
+        public void CreateIndexTest()
+        {
+            service.DeleteIndex();
+
+            service.CreateIndex();
+
+            service.Index(GetMockData());
+
+            var all = service.GetAll();
+
+            Assert.Empty(all);
+        }
+
 
         private List<ElasticFileInfo> GetMockData()
         {

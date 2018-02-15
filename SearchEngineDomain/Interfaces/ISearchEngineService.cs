@@ -6,6 +6,10 @@ namespace SearchEngineDomain.Interfaces
     {
         long Index(List<T> docs);
 
+        void DeleteIndex();
+
+        void CreateIndex();
+
         List<T> Search(string q);
         
         List<T> GetAll();
