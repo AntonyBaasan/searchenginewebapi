@@ -2,8 +2,10 @@
 using ElasticSearchEngineService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SearchEngineDataAccess;
 using SearchEngineDomain.Interfaces;
 
 namespace SolrWebService
@@ -22,8 +24,14 @@ namespace SolrWebService
         {
             ElasticSetup(services);
             //SetupSolr(services);
+            DataBaseSetup(services);
 
             services.AddMvc();
+        }
+
+        private void DataBaseSetup(IServiceCollection services)
+        {
+            services.AddDbContext<ProphixDBContext>(options => options.UseSqlServer(Configuration.GetConnectionString("ProphixMetaDatabase")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,7 +11,7 @@ namespace SearchEngineTests
 
         public ElasticTests()
         {
-            service = new ElasticServiceImpl<ElasticFileInfo>(SettingsUtils.GetConnectionString("ElasticSearchEngine"));
+            service = new ElasticServiceImpl<ElasticFileInfo>(SettingsUtils.GetConnectionString("ElasticSearchEngine"), "test_index");
         }
 
         [Fact]

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
+using System.Collections.Generic;
 using ElasticSearchEngineService.Models;
 using Microsoft.AspNetCore.Mvc;
+using SearchEngineDataAccess;
 using SearchEngineDomain.Interfaces;
 
 namespace SolrWebService.Controllers
@@ -10,10 +12,33 @@ namespace SolrWebService.Controllers
     public class ElasticController : Controller
     {
         private readonly ISearchEngineService<ElasticFileInfo> _searchEngineService;
+        private readonly ProphixDBContext _context;
 
-        public ElasticController(ISearchEngineService<ElasticFileInfo> searchEngineService)
+        public ElasticController(ISearchEngineService<ElasticFileInfo> searchEngineService, ProphixDBContext context)
         {
             _searchEngineService = searchEngineService;
+            _context = context;
+        }
+
+        [HttpGet]
+        [Route("index")]
+        public string Index(string q)
+        {
+            var files = _context.FileInfos;
+            var fileList = files.ToList();
+            var elasticFileInfo = fileList.ConvertAll(f => new ElasticFileInfo
+            {
+                Id = f.Id,
+                ParentId = f.ParentId,
+                Name = f.Name,
+                Type = f.Type,
+                Description = f.Description,
+                CreatedBy = f.CreatedBy,
+                CreatedOn = f.CreatedOn,
+                LastModified = f.LastModified,
+            });
+
+            return $"{_searchEngineService.Index(elasticFileInfo)} files indexed";
         }
 
         [HttpGet]
