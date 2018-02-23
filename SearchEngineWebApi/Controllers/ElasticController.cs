@@ -45,14 +45,10 @@ namespace SolrWebService.Controllers
             return $"{_searchEngineService.Index(elasticFileInfo)} files indexed";
         }
 
-        private List<string> ResolveType(int type)
+        private string ResolveType(int type)
         {
-            var result = new List<string>();
-
             FileType fileType = (FileType) Enum.Parse(typeof(FileType), type.ToString());
-            result.Add(SplitCamelCase(fileType.ToString()));
-            
-            return result;
+            return SplitCamelCase(fileType.ToString());
         }
 
         private string ResolveLocation(string str)
