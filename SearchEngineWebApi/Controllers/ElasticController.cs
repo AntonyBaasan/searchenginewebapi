@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using ElasticSearchEngineService.Models;
 using Microsoft.AspNetCore.Mvc;
 using SearchEngineDataAccess;
@@ -22,9 +24,9 @@ namespace SolrWebService.Controllers
 
         [HttpGet]
         [Route("index")]
-        public string Index()
+        public async Task<string> Index()
         {
-            var files = _context.FileInfos;
+            List<FileInfo> files = await _context.GetAllFiles();
             var fileList = files.ToList();
             var elasticFileInfo = fileList.ConvertAll(f => new ElasticFileInfo
             {
@@ -36,9 +38,42 @@ namespace SolrWebService.Controllers
                 CreatedBy = f.CreatedBy,
                 CreatedOn = f.CreatedOn,
                 LastModified = f.LastModified,
+                TypeAsString = ResolveType(f.Type),
+                Location = ResolveLocation(f.Location)
             });
 
             return $"{_searchEngineService.Index(elasticFileInfo)} files indexed";
+        }
+
+        private List<string> ResolveType(int type)
+        {
+            var result = new List<string>();
+
+            FileType fileType = (FileType) Enum.Parse(typeof(FileType), type.ToString());
+            result.Add(SplitCamelCase(fileType.ToString()));
+            
+            return result;
+        }
+
+        private string ResolveLocation(string str)
+        {
+            var filePath = str.Trim();
+            var userIndex = str.IndexOf("([FSPH*1");
+            if (userIndex != 0)
+            {
+                var folderParse = filePath.Split('\\');
+                filePath = filePath.Replace("([FSPH*1", "Users");
+            }
+
+            filePath = filePath.Replace("([FSPH*2", "recycle bin");
+            filePath = filePath.Replace("([FSPH*0", "public");
+
+            return filePath;
+        }
+
+        public static string SplitCamelCase(string input)
+        {
+            return System.Text.RegularExpressions.Regex.Replace(input, "([A-Z])", " $1", System.Text.RegularExpressions.RegexOptions.Compiled).Trim();
         }
 
         [HttpGet]

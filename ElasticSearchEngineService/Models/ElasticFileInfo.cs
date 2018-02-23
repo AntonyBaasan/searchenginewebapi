@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Nest;
 
 namespace ElasticSearchEngineService.Models
@@ -14,5 +15,8 @@ namespace ElasticSearchEngineService.Models
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? LastModified { get; set; }
+
+        public List<string> TypeAsString { get; set; }
+        public string Location { get; set; }
     }
 }

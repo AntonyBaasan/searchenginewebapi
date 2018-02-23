@@ -88,11 +88,11 @@ namespace SearchEngineTests
             Assert.Empty(all);
         }
 
-
         private List<ElasticFileInfo> GetMockData()
         {
-            var f1 = new ElasticFileInfo { Id = 0, Name = "TestFile1", Description = "What are you looking!", CreatedBy = "Rodney Jones" };
-            var f2 = new ElasticFileInfo { Id = 1, Name = "TestFile2", Description = "Hello world my friends", CreatedBy = "Antony Baasandorj" };
+            var f1 = new ElasticFileInfo { Id = 0, Name = "TestFile1", Description = "What are you looking!", CreatedBy = "Rodney Jones", Type = 1, Location ="([FSPH*3]\\_*SmartMonitorProject*_" };
+            var f2 = new ElasticFileInfo { Id = 1, Name = "TestFile2", Description = "Hello world my friends", CreatedBy = "Antony Baasandorj", Type=7, Location= "([FSPH*0\\([FSPH*1\\Antony Baasandorj\\ImportData-1" };
+
             return new List<ElasticFileInfo> { f1, f2 };
         }
 

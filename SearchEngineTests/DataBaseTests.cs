@@ -22,6 +22,13 @@ namespace SearchEngineTests
             Assert.Equal(61, allFiles.Count);
         }
 
+        [Fact]
+        public async void GetAllFilesByStoredProcedureTest()
+        {
+            var allFiles = await dbContext.GetAllFiles();
+            Assert.Equal(61, allFiles.Count);
+        }
+
          [Fact]
         public async void GetAllFilesTest2()
         {

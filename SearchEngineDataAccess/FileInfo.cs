@@ -14,5 +14,7 @@ namespace SearchEngineDataAccess
         public string CreatedBy { get; set; }
         public DateTime CreatedOn { get; set; }
         public DateTime? LastModified { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public string Location { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SearchEngineDataAccess
 {
@@ -12,7 +14,13 @@ namespace SearchEngineDataAccess
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<FileInfo>().ToTable("FileSystem");
+            var builder = modelBuilder.Entity<FileInfo>().ToTable("FileSystem");
         }
+
+        public Task<List<FileInfo>> GetAllFiles()
+        {
+            return FileInfos.FromSql("GetAllFiles").ToListAsync();
+        }
+
     }
 }
