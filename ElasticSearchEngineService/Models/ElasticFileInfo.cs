@@ -8,7 +8,7 @@ namespace ElasticSearchEngineService.Models
         public int Id { get; set; }
         public int? ParentId { get; set; }
         public int Type { get; set; }
-        [Text(Analyzer = "simple")]
+        [Text(Boost = 1.5, Analyzer = "simple")]
         public string Name { get; set; }
         public string Description { get; set; }
         public string CreatedBy { get; set; }
